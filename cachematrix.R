@@ -47,3 +47,10 @@ cacheSolve <- function(x, ...) {
     
     m  ## return inverse matrix
 }
+
+## test calls
+## mat <- matrix(data = c(4,2,7,6), nrow = 2, ncol = 2)
+## mat2 <- makeCacheMatrix(mat)
+## cacheSolve(mat2)
+
+## help found at http://stackoverflow.com/questions/25374803/returning-the-inverse-matrix-from-a-cached-object-in-r-checking-that-input-matri
