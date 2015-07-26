@@ -1,46 +1,49 @@
-## Put comments here that give an overall description of what your
-## functions do
-
-## Write a short comment describing this function
+## initialize the sorage matrix and create functions
 
 makeCacheMatrix <- function(x = matrix()) {
-
-m <- NULL ## sets the value of m to NULL in case cacheSolve hasn't been used yet
-set = function (y) {
-x <<- y
-m <<- NULL
+    
+    m <- NULL
+    
+    set <- function(y)
+        
+    {
+        x <<- y   ## assign y to input matrix
+        
+        m <<- NULL  ## initialize storage matrix
+        
+    }
+    get <- function() x ## get inout matrix
+    
+    setinverse <- function(inverse) m <<- inverse  ## store inverse
+    
+    getinverse <- function() m ## calculate inverse
+    
+    list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)  ## function list
 }
 
-setmatrix <- function(y) { ## set value of the matrix
-getmatrix <- function() x
-setinverse <- function(inverse) m <<- inverse
-getinverse <- function () m
 
-list(setmatrix = setmatrix, getmatrix = getmatrix, setinverse=setinverse, getinverse = getinverse) ## creats list of the 4 functions
-}
-
-
-## Write a short comment describing this function
+## Use solve function to invert matrix if not already done
+## if already cached return cache
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    ## Return a matrix that is the inverse of 'x'
+    m <- x$getinverse()  ## set m to cached matrix
+    
+    if(!is.null(m)) {  #check if cache is empty 
         
-        m <- x$getinverse() #return if inverse has already been calculated
+        message("getting cached data")  ## let caller know we are using cache
         
-        if(!isnull(m)) { ## check to see if cacheSolve already calculated inverse
-        message (getting cached data")
-        return(m)
-        }
+        return(m)  ## return cache
         
-#if not already calculated
-y <- x$getmatrix() ## get the value of the input matrix
-
-x$setmatrix(y) ## run setmatrix on input matrix to cache it
-
-m <- solve(y, ...) ## compute the value of the inverse matrix
-
-x$setinverse(m) ## run the setinverse function on the inverse to cache the inverse
-
-m ## return the inverse
-
+    }
+    
+    ## otherwise calculate inverse
+    
+    temp <- x$get()  ## otherwise calculate inverse
+    
+    m <- solve(temp, ...)  ## solve function inverts a square matrix
+    
+    x$setinverse(m)   ## store inverse matrix in cache
+    
+    m  ## return inverse matrix
 }
